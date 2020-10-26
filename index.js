@@ -1,5 +1,68 @@
 let myLibrary = [];
 
+const Book = (title, author, pages, status) => {
+  let bookTitle = title;
+  let bookAuthor = author;
+  let totalPages = pages;
+  let readStatus = status;
+
+  function setTitle(bTitle) {
+    bookTitle = bTitle;
+  }
+
+  function setAuthor(bAuthor) {
+    bookAuthor = bAuthor;
+  }
+
+  function setTotalPages(bPages) {
+    totalPages = bPages;
+  }
+
+  function setStatus(bStatus) {
+    readStatus = bStatus;
+  }
+
+
+  function getTitle() {
+    return bookTitle;
+  }
+
+  function getAuthor() {
+    return bookAuthor;
+  }
+
+  function getTotalPages() {
+    return totalPages;
+  }
+
+  function getStatus() {
+    return readStatus;
+  }
+
+  return {
+    setTitle,
+    setAuthor,
+    setTotalPages,
+    setStatus,
+    getTitle,
+    getAuthor,
+    getTotalPages,
+    getStatus,
+  };
+};
+
+const addBookToLibrary = () => {
+  const bookTitle = document.getElementById('bookTitle').value;
+  const bookAuthor = document.getElementById('bookAuthor').value;
+  const pageNum = document.getElementById('pageNum').value;
+  const bookStatus = document.getElementById('readStatus').checked;
+
+  const newBook = Book(bookTitle, bookAuthor, pageNum, bookStatus);
+  myLibrary.push(newBook);
+  console.log(myLibrary);
+  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
+};
+
 const toggleStatus = (book) => {
   book.status = !book.status;
   localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
@@ -26,10 +89,11 @@ const LoopTheArray = () => {
     const tdButton = document.createElement('td');
     const toogleButton = document.createElement('button');
     const tdToggle = document.createElement('td');
-    tdTitle.textContent = element.title;
-    tdAuthor.textContent = element.author;
-    tdAge.textContent = element.pageNumber;
-    tdStatus.textContent = element.status;
+    console.log(element);
+    tdTitle.textContent = element.getTitle();
+    tdAuthor.textContent = element.getAuthor();
+    tdAge.textContent = element.getTotalPages();
+    tdStatus.textContent = element.getStatus();
     deleteBtn.textContent = 'Delete';
     tdButton.appendChild(deleteBtn);
     deleteBtn.setAttribute('class', 'btnDelete');
@@ -50,7 +114,7 @@ const LoopTheArray = () => {
 
     toogleButton.addEventListener('click', () => {
       toggleStatus(element);
-      tdStatus.textContent = element.status;
+      tdStatus.textContent = element.getStatus;
     });
 
 
@@ -63,6 +127,13 @@ const LoopTheArray = () => {
     );
   });
 };
+
+document.querySelector('.form').addEventListener('submit', (e) => {
+  clearView();
+  addBookToLibrary();
+  LoopTheArray();
+  e.preventDefault();
+});
 
 const loadLocalStorage = () => {
   if (localStorage.getItem('bookLibrary', JSON.stringify(myLibrary))) {
@@ -77,31 +148,12 @@ window.addEventListener('load', () => {
   LoopTheArray();
 });
 
-function Book(title, author, pageNumber, status = false) {
-  this.title = title;
-  this.pageNumber = pageNumber;
-  this.author = author;
-  this.status = status;
-}
-
-const addBookToLibrary = () => {
-  const bookTitle = document.getElementById('bookTitle').value;
-  const bookAuthor = document.getElementById('bookAuthor').value;
-  const pageNum = document.getElementById('pageNum').value;
-  const bookStatus = document.getElementById('readStatus').checked;
-
-  const newBook = new Book(bookTitle, bookAuthor, pageNum, bookStatus);
-  myLibrary.push(newBook);
-  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
-};
-
-
-document.querySelector('.form').addEventListener('submit', (e) => {
-  clearView();
-  addBookToLibrary();
-  LoopTheArray();
-  e.preventDefault();
-});
+// function Book(title, author, pageNumber, status = false) {
+//   this.title = title;
+//   this.pageNumber = pageNumber;
+//   this.author = author;
+//   this.status = status;
+// }
 
 
 const modal = document.getElementById('form-modal');
