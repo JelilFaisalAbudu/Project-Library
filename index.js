@@ -1,18 +1,13 @@
 let myLibrary = [];
 
-const Book = (title, author, pages, status = false) => {
-  const bookTitle = title;
-  const bookAuthor = author;
-  const totalPages = pages;
-  const readStatus = status;
-
-  return {
-    bookTitle,
-    bookAuthor,
-    totalPages,
-    readStatus,
-  };
-};
+class Book {
+  constructor(title, author, pages, status = false) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
+  }
+}
 
 const addBookToLibrary = () => {
   const bookTitle = document.getElementById('bookTitle').value;
@@ -20,13 +15,13 @@ const addBookToLibrary = () => {
   const pageNum = document.getElementById('pageNum').value;
   const bookStatus = document.getElementById('readStatus').checked;
 
-  const newBook = Book(bookTitle, bookAuthor, pageNum, bookStatus);
+  const newBook = new Book(bookTitle, bookAuthor, pageNum, bookStatus);
   myLibrary.push(newBook);
   localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
 };
 
 const toggleStatus = (book) => {
-  book.readStatus = !book.readStatus;
+  book.status = !book.status;
   localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
 };
 
@@ -51,10 +46,10 @@ const LoopTheArray = () => {
     const tdButton = document.createElement('td');
     const toogleButton = document.createElement('button');
     const tdToggle = document.createElement('td');
-    tdTitle.textContent = element.bookTitle;
-    tdAuthor.textContent = element.bookAuthor;
-    tdAge.textContent = element.totalPages;
-    tdStatus.textContent = element.readStatus;
+    tdTitle.textContent = element.title;
+    tdAuthor.textContent = element.author;
+    tdAge.textContent = element.pages;
+    tdStatus.textContent = element.status;
     deleteBtn.textContent = 'Delete';
     tdButton.appendChild(deleteBtn);
     deleteBtn.setAttribute('class', 'btnDelete');
@@ -75,7 +70,7 @@ const LoopTheArray = () => {
 
     toogleButton.addEventListener('click', () => {
       toggleStatus(element);
-      tdStatus.textContent = element.readStatus;
+      tdStatus.textContent = element.status;
     });
 
 
@@ -97,7 +92,7 @@ document.querySelector('.form').addEventListener('submit', (e) => {
 });
 
 const loadLocalStorage = () => {
-  if (localStorage.getItem('bookLibrary', JSON.stringify(myLibrary))) {
+  if (localStorage.getItem('bookLibrary')) {
     myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
   } else {
     myLibrary = [];
