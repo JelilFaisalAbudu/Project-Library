@@ -1,53 +1,16 @@
 let myLibrary = [];
 
-const Book = (title, author, pages, status) => {
-  let bookTitle = title;
-  let bookAuthor = author;
-  let totalPages = pages;
-  let readStatus = status;
-
-  function setTitle(bTitle) {
-    bookTitle = bTitle;
-  }
-
-  function setAuthor(bAuthor) {
-    bookAuthor = bAuthor;
-  }
-
-  function setTotalPages(bPages) {
-    totalPages = bPages;
-  }
-
-  function setStatus(bStatus) {
-    readStatus = bStatus;
-  }
-
-
-  function getTitle() {
-    return bookTitle;
-  }
-
-  function getAuthor() {
-    return bookAuthor;
-  }
-
-  function getTotalPages() {
-    return totalPages;
-  }
-
-  function getStatus() {
-    return readStatus;
-  }
+const Book = (title, author, pages, status = false) => {
+  const bookTitle = title;
+  const bookAuthor = author;
+  const totalPages = pages;
+  const readStatus = status;
 
   return {
-    setTitle,
-    setAuthor,
-    setTotalPages,
-    setStatus,
-    getTitle,
-    getAuthor,
-    getTotalPages,
-    getStatus,
+    bookTitle,
+    bookAuthor,
+    totalPages,
+    readStatus,
   };
 };
 
@@ -59,12 +22,11 @@ const addBookToLibrary = () => {
 
   const newBook = Book(bookTitle, bookAuthor, pageNum, bookStatus);
   myLibrary.push(newBook);
-  console.log(myLibrary);
   localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
 };
 
 const toggleStatus = (book) => {
-  book.status = !book.status;
+  book.readStatus = !book.readStatus;
   localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
 };
 
@@ -89,11 +51,10 @@ const LoopTheArray = () => {
     const tdButton = document.createElement('td');
     const toogleButton = document.createElement('button');
     const tdToggle = document.createElement('td');
-    console.log(element);
-    tdTitle.textContent = element.getTitle();
-    tdAuthor.textContent = element.getAuthor();
-    tdAge.textContent = element.getTotalPages();
-    tdStatus.textContent = element.getStatus();
+    tdTitle.textContent = element.bookTitle;
+    tdAuthor.textContent = element.bookAuthor;
+    tdAge.textContent = element.totalPages;
+    tdStatus.textContent = element.readStatus;
     deleteBtn.textContent = 'Delete';
     tdButton.appendChild(deleteBtn);
     deleteBtn.setAttribute('class', 'btnDelete');
@@ -114,7 +75,7 @@ const LoopTheArray = () => {
 
     toogleButton.addEventListener('click', () => {
       toggleStatus(element);
-      tdStatus.textContent = element.getStatus;
+      tdStatus.textContent = element.readStatus;
     });
 
 
@@ -147,13 +108,6 @@ window.addEventListener('load', () => {
   loadLocalStorage();
   LoopTheArray();
 });
-
-// function Book(title, author, pageNumber, status = false) {
-//   this.title = title;
-//   this.pageNumber = pageNumber;
-//   this.author = author;
-//   this.status = status;
-// }
 
 
 const modal = document.getElementById('form-modal');
