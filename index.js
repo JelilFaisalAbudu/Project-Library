@@ -44,7 +44,7 @@ const LoopTheArray = () => {
     const tdStatus = document.createElement('td');
     const deleteBtn = document.createElement('button');
     const tdButton = document.createElement('td');
-    const toogleButton = document.createElement('button');
+    const toggleButton = document.createElement('button');
     const tdToggle = document.createElement('td');
     tdTitle.textContent = element.title;
     tdAuthor.textContent = element.author;
@@ -56,9 +56,9 @@ const LoopTheArray = () => {
     deleteBtn.setAttribute('data', myLibrary.indexOf(element));
 
 
-    tdToggle.appendChild(toogleButton);
-    toogleButton.setAttribute('class', 'toggle-button');
-    toogleButton.textContent = 'Toggle';
+    tdToggle.appendChild(toggleButton);
+    toggleButton.setAttribute('class', 'toggle-button');
+    toggleButton.textContent = 'Toggle';
 
     trow.appendChild(tdTitle);
     trow.appendChild(tdAuthor);
@@ -68,7 +68,7 @@ const LoopTheArray = () => {
     trow.appendChild(tdToggle);
 
 
-    toogleButton.addEventListener('click', () => {
+    toggleButton.addEventListener('click', () => {
       toggleStatus(element);
       tdStatus.textContent = element.status;
     });
